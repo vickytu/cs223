@@ -1,0 +1,15 @@
+A summary of the assignment presented here EXACTLY how it was presented to us (with less detail) by Professor Aspnes:
+
+For this assignment, you are to implement an encoder for a polyalphabetic substitution cipher vaguely inspired by the Enigma machines used by Germany during World War 2. Unlike the Enigma machine, this cipher doesn't provide much security, so you can probably tell your non-US-national friends about it without violating US export control laws.26
+
+Each letter 'A' through 'Z' or 'a' through 'z' is encrypted by shifting it some number of positions forward in the alphabet, wrapping around at the end.
+
+The number of positions is determined by an offset that changes over time. The initial shift is 17 positions. After encoding an uppercase letter, the shift is increased by 5. After encoding a lowercase letter, the shift is increased by 3. To avoid overflow on long texts, it's probably a good idea to store the offset modulo 26.
+
+An uppercase letter is always encoded by an uppercase letter, and a lowercase letter is always encoded by a lowercase letter. All other characters are passed through intact.
+
+Below is an example of encoding a famous Napoleonic palindrome using this cipher:
+
+Plaintext:   A  b  l  e  w  a  s  I  e  r  e  I  s  a  w  E  l  b  a
+Offset:      17 22 25 2  5  8  11 14 19 22 25 2  7  10 13 16 21 24 1
+Ciphertext:  R  x  k  g  b  i  d  W  x  n  d  K  z  k  j  U  g  z  b
