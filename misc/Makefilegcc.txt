@@ -1,0 +1,14 @@
+
+CC=gcc
+
+all: setTest 
+
+test: treeTest
+
+treeTest: avlTree.c avlTree.h
+	gcc -fnested-functions -o testTree avlTree.c avlTree.h
+
+setTest: testOrderedSet.c orderedSet.c orderedSet.h avlTree.c avlTree.h
+	gcc -fnested-functions -o setTree testOrderedSet.c orderedSet.c orderedSet.h avlTree.c avlTree.h
+clean:
+	$(RM) *.o 

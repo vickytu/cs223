@@ -1,0 +1,44 @@
+#!/usr/bin/python
+
+import tester
+import sys
+import os
+import time
+import glob
+
+inputDir = '/c/cs223/Hwk9/testFiles'
+
+if not os.path.exists(inputDir):
+    inputDir = 'testFiles' 
+
+t = tester.Tester(dueDate = time.mktime(time.strptime('2015-04-15 23:00', '%Y-%m-%d %H:%M')))
+
+try:
+    t.copyDir('.')
+except:
+    t.testFail(100, "Could not copy files")
+    print(t.report())
+    sys.exit(0)
+
+t.test(20, """make -B CC=gcc CFLAGS='-std=c99 -Wall -pedantic -g3' && test -x ./maze""", timeLimit = 20)
+
+t.copyDirFollowLinks(inputDir)
+
+t.log("# test sample inputs and outputs")
+
+# sample inputs and outputs
+# 10 points for each test
+inputs = glob.glob(os.path.join(inputDir, '*.in.pgm'))
+inputs.sort()
+for input in inputs:
+    output = input.replace('.in.', '.out.')
+    t.test(8, 'cat {} | ./maze'.format(os.path.basename(input)), 
+           tester.Match(open(output, "rb").read()), 5)
+
+t.log("# valgrind test on 20-20-1.in.pgm")
+
+t.test(8, "exec valgrind -q --partial-loads-ok=yes --leak-check=yes ./maze < 20-20-1.in.pgm > /dev/null",
+        tester.Match(b''),
+        30)
+
+print(t.report())

@@ -1,0 +1,3 @@
+14 10 30 satan
+14 56 7 satan
+470 3 5 hail
